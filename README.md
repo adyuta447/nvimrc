@@ -9,6 +9,10 @@ this is the most simple and fast vim configuration, does not require complicated
 ## Installation
 
 the first thing is that you definitely have to install neovim, After installing neovim you need to create a file to configure the neovim plugin
+- Install Nodejs
+```
+sudo curl -sL install-node.now.sh/lts | bash
+```
 
 - Install the Vim-plug Plugin Manager
 
@@ -37,5 +41,6 @@ open the init.vim file again and type
 PlugInstall
 ```
 after the installation is complete, then restart your nvim
+
 
 
