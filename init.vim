@@ -145,8 +145,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'voldikss/vim-floaterm'
+    Plug 'ghifarit53/tokyonight-vim'
 call plug#end()
-colorscheme nord
+colorscheme tokyonight
 " Scroll status
 let g:airline_section_x = '%{ScrollStatus()} '
 let g:airline_section_y = airline#section#create_right(['filetype'])
