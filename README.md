@@ -9,6 +9,18 @@ this is the most simple and fast vim configuration, does not require complicated
 ## Installation
 
 the first thing is that you definitely have to install neovim, After installing neovim you need to create a file to configure the neovim plugin
+- Install Ctags
+
+Debian
+```
+sudo apt-get install ctags
+```
+
+Arch
+```
+yay -S ctags
+```
+
 - Install Nodejs
 ```
 sudo curl -sL install-node.now.sh/lts | bash
