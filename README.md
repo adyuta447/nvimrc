@@ -70,7 +70,8 @@ Require the plugin and call ```setup``` with a config table with one or more of 
 
 require("presence"):setup({
 
-```
+```lua
+require("presence"):setup({
     -- General options
 
     auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
@@ -95,9 +96,9 @@ require("presence"):setup({
 ```
 ### Vimrc
 Or if global variables are more your thing, you can use any of the following instead:
-```
+```vim
 " General options
-" General options
+
 let g:presence_auto_update         = 1
 let g:presence_neovim_image_text   = "The One True Text Editor"
 let g:presence_main_image          = "file"
