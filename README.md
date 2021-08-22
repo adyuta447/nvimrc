@@ -50,9 +50,73 @@ After copying everything, don't forget to type **wq** in your nvim
 open the init.vim file again and type
 
 ```
-PlugInstall
+:PlugInstall
 ```
 after the installation is complete, then restart your nvim
 
+## Discord RPC Nvim
+<img src="https://i.ibb.co/hMSKCND/Screenshot-2021-08-22-11-28-32.png"> <img src="https://i.ibb.co/8r2kc24/Screenshot-2021-08-22-11-38-36.png">
+
+### Installation
+- Vim-Plug: ```Plug 'andweeb/presence.nvim'```<br>
+- Packer.nvim: ```use 'andweeb/presence.nvim'```
+
+## Configuration
+Configuration is not necessary for Rich Presence to work. But for those that want to override the default configs, the following options are available to configure in either Lua or Vimrc.
+
+### Lua
+Require the plugin and call ```setup``` with a config table with one or more of the following keys:
+
+
+require("presence"):setup({
+
+```
+    -- General options
+
+    auto_update         = true,                       -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+    main_image          = "file",                     -- Text displayed when hovered over the Neovim image
+    neovim_image_text   = "Neovim",                   -- Main image display (either "neovim" or "file")
+    client_id           = "793271441293967371",       -- Use your own Discord application client id (not recommended)
+    log_level           = nil,                        -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
+    debounce_timeout    = 10,                         -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
+    enable_line_number  = false,                      -- Displays the current line number instead of the current project
+    blacklist           = {},                         -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
+    buttons             = true,                       -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string>
+
+    -- Rich Presence text options
+    editing_text        = "Editing %s",               -- Format string rendered when an editable file is loaded in the buffer
+    file_explorer_text  = "Browsing %s",              -- Format string rendered when browsing a file explorer
+    git_commit_text     = "Committing changes",       -- Format string rendered when commiting changes in git
+    plugin_manager_text = "Managing plugins",         -- Format string rendered when managing plugins
+    reading_text        = "Reading %s",               -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer
+    workspace_text      = "Working on %s",            -- Workspace format string (either string or function(git_project_name: string|nil, buffer: string): string)
+    line_number_text    = "Line %s out of %s",        -- Line number format string (for when enable_line_number is set to true)
+})
+```
+### Vimrc
+Or if global variables are more your thing, you can use any of the following instead:
+```
+" General options
+" General options
+let g:presence_auto_update         = 1
+let g:presence_neovim_image_text   = "The One True Text Editor"
+let g:presence_main_image          = "file"
+let g:presence_client_id           = "793271441293967371"
+let g:presence_log_level           = "debug"
+let g:presence_debounce_timeout    = 10
+let g:presence_enable_line_number  = 0
+let g:presence_blacklist           = []
+let g:presence_buttons             = 1
+
+" Rich Presence text options
+let g:presence_editing_text        = "Editing %s"
+let g:presence_file_explorer_text  = "Browsing %s"
+let g:presence_git_commit_text     = "Committing changes"
+let g:presence_plugin_manager_text = "Managing plugins"
+let g:presence_reading_text        = "Reading %s"
+let g:presence_workspace_text      = "Working on %s"
+let g:presence_line_number_text    = "Line %s out of %s"
+
+```
 
 
