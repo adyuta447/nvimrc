@@ -31,7 +31,11 @@ sudo curl -sL install-node.now.sh/lts | bash
 ```
  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
-
+- create the subfolder structure to store the configuration file
+```
+cd ~
+mkdir -p .config/nvim
+```
 - (Optional) Import Existing vim Configuration
 
 ```
