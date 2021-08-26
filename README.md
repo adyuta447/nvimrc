@@ -49,7 +49,7 @@ cp ~/.vimrc ~/.config/nvim/init.vim
 ```
 or you can directly check the file in the ~/.config/nvim directory and then check whether there is a file called init.vim or not. Then copy everything in init.vim file on my github and paste it in your init.vim file which is in ~/.config/nvim. Remember and don't copy or take everything there, just init.vim
 
-After copying everything, don't forget to type **wq** in your nvim
+After copying everything, don't forget to type **:wq** in your nvim
 
 open the init.vim file again and type
 
