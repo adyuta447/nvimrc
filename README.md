@@ -2,7 +2,7 @@
 
 <center><img src="https://i.ibb.co/D9Jg1j3/20210828-120639.jpg"></center>
 
-## Simple and Fast
+## Simple, Fast, And Easy
 
 this is the most simple and fast vim configuration, does not require complicated installation and takes a lot of time. Suitable for those who want to use vim but are confused about installing or lazy to install plugins and it doesn't take a long time
 
