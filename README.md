@@ -72,8 +72,6 @@ Configuration is not necessary for Rich Presence to work. But for those that wan
 Require the plugin and call ```setup``` with a config table with one or more of the following keys:
 
 
-require("presence"):setup({
-
 ```lua
 require("presence"):setup({
     -- General options
