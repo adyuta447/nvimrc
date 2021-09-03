@@ -1,6 +1,6 @@
 # NeoVim File Configuration 
 
-<center><img src="https://i.ibb.co/58LkD6v/20210831-150059.jpg"></center>
+<center><img src="https://i.ibb.co/gMYVvnh/20210903-204509.jpg"></center>
 
 ## Simple, Fast, And Easy
 
