@@ -113,7 +113,6 @@ let g:airline#extensions#default#section_truncate_width = {
 
 let g:colorschemes= 'SerialExperimentsLain'
 
-set fillchars+=stl:\ ,stlnc:\
 
 let g:user_emmet_mode='n'    "only enable normal mode functions.
 let g:user_emmet_mode='inv'  "enable all functions, which is equal to
