@@ -97,7 +97,7 @@ nmap <F8> :TagbarToggle<CR>
 let g:ale_completion_enabled = 1
 set omnifunc=ale#completion#OmniFunc
 " Airline configuration
-let g:airline_theme='nord'
+let g:airline_theme='deus'
 " Airline Settings 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
