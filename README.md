@@ -9,6 +9,9 @@ this is the most simple and fast vim configuration, does not require complicated
 ### Requirement
 - vim8.2+, or neovim 0.5.0+.
 
+### Warning!
+- **read and follow the installation guide on readme.md, otherwise your Neovim will most likely crash**
+
 ## Installation
 
 the first thing is that you definitely have to install neovim, After installing neovim you need to create a file to configure the neovim plugin
