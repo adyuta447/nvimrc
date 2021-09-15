@@ -40,7 +40,7 @@ yay -S ctags
 ```
 if your operating system is different from the one mentioned above, then install it here
 
-[code-minimap](https://github.com/wfxr/code-minimap)
+[code-minimap](https://github.com/wfxr/code-minimap/releases/tag/v0.6.1)
 
 - Install Nodejs
 ```
