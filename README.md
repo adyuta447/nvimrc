@@ -12,6 +12,21 @@ this is the most simple and fast vim configuration, does not require complicated
 ## Installation
 
 the first thing is that you definitely have to install neovim, After installing neovim you need to create a file to configure the neovim plugin
+
+- Install Minimap
+
+![screenshot](https://raw.githubusercontent.com/wfxr/i/master/minimap-vim.gif)
+
+Arch
+```
+yay -S code-minimap
+```
+
+MacOS
+```
+brew install code-minimap
+```
+
 - Install Ctags
 
 Debian
@@ -23,6 +38,9 @@ Arch
 ```
 yay -S ctags
 ```
+if your operating system is different from the one mentioned above, then install it here
+
+[code-minimap](https://github.com/wfxr/code-minimap)
 
 - Install Nodejs
 ```
