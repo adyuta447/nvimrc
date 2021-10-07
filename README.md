@@ -12,6 +12,9 @@ this is the most simple and fast vim configuration, does not require complicated
 ### Warning!
 - **read and follow the installation guide on readme.md, otherwise your Neovim will most likely crash**
 
+### Bloat!
+- all plugins are mostly dedicated to web developers, if you still want to use them then remove some unnecessary plugins as they will affect your neovim performance
+
 ## Installation
 
 the first thing is that you definitely have to install neovim, After installing neovim you need to create a file to configure the neovim plugin
