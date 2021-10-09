@@ -1,4 +1,32 @@
 {
+  "suggest.completionItemKindLabels": { "method": "  ",
+    "function": "  ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": " פּ ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": "  ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  "},
+  "tailwindCSS.validate": true,
+  "rpc.idleText": "Idle",
+  "rpc.detailsIdling": "Idling",
   "languageserver": {
     "go": {
       "command": "gopls",
@@ -6,5 +34,5 @@
       "trace.server": "verbose",
       "filetypes": ["go"]
     }
-  }
+  } 
 }
