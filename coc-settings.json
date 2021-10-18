@@ -1,5 +1,13 @@
 {
-  "suggest.completionItemKindLabels": { "method": "  ",
+  "react-refactor.produceClass": true,
+  "tree.openedIcon": "-",
+  "prettier.formatterPriority": 1,
+  "prettier.endOfLine": "auto",
+  "diagnostic.displayByAle": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "suggest.completionItemKindLabels": { 
+    "method": "  ",
     "function": "  ",
     "variable": "[]",
     "field": "  ",
