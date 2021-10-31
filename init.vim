@@ -13,6 +13,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   "autocmd VimEnter * PlugInstall
   "autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+
 filetype plugin indent on
 set nu
 set cursorline
@@ -96,22 +97,6 @@ nmap <F8> :TagbarToggle<CR>
 " source for other completion plugins, like Deoplete.
 let g:ale_completion_enabled = 1
 set omnifunc=ale#completion#OmniFunc
-" Airline configuration
-let g:airline_theme='deus'
-" Airline Settings 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#default#section_truncate_width = {
-      \ 'b': 90,
-      \ 'x': 70,
-      \ 'y': 90,
-      \ 'z': 50,
-      \ 'warning': 80,
-      \ 'error': 80,
-      \ }
-
-let g:colorschemes= 'SerialExperimentsLain'
 
 
 let g:user_emmet_mode='n'    "only enable normal mode functions.
@@ -148,48 +133,33 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'scrooloose/nerdcommenter'
     Plug 'tpope/vim-surround'
     Plug 'w0rp/ale'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
+    Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
+    Plug 'akinsho/bufferline.nvim'
+"    Plug 'vim-airline/vim-airline'
+"    Plug 'vim-airline/vim-airline-themes'
     Plug 'ryanoasis/vim-devicons'
-    Plug 'arcticicestudio/nord-vim'
-    Plug 'leshill/vim-json'
+    Plug 'arcticicestudio/nord-vim' 
     Plug 'prabirshrestha/vim-lsp'
     Plug 'hushicai/tagbar-javascript.vim'
     Plug 'majutsushi/tagbar'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
     Plug 'nvim-treesitter/playground'
-    Plug 'ojroques/vim-scrollstatus'
+ "   Plug 'ojroques/vim-scrollstatus'
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'voldikss/vim-floaterm'
     Plug 'neovim/nvim-lspconfig'
     Plug 'glepnir/lspsaga.nvim'
     Plug 'mhinz/vim-signify'
+    Plug 'othree/javascript-libraries-syntax.vim'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'junegunn/gv.vim'
     Plug 'mattn/emmet-vim'
     Plug 'wfxr/minimap.vim'
+    Plug 'joshdick/onedark.vim'
 call plug#end()
-colorscheme gruvbox
-" Scroll status
-let g:airline_section_x = '%{ScrollStatus()} '
-let g:airline_section_y = airline#section#create_right(['filetype'])
-let g:airline_section_z = airline#section#create([
-            \ '%#__accent_bold#%3l%#__restore__#/%L', ' ',
-            \ '%#__accent_bold#%3v%#__restore__#/%3{virtcol("$") - 1}'
-            \ ])
-
-syntax region mkdURL matchgroup=mkdEscape start="(" end=")" contained oneline
-syntax region mkdCode matchgroup=mkdEscape start="`" end="`" oneline concealends contained
-
-
-syntax match mkdUnderline /─*$/
-syntax match mkdLeftAngle /&lt;/ conceal cchar=<
-syntax match mkdRightAngle /&gt;/ conceal cchar=>
-
+colorscheme onedark
+"One dark 
 
 
 hi def link mkdLine special
@@ -324,3 +294,368 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in
 " Start NERDTree
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+
+lua << EOF
+local bufferline = require('bufferline')
+
+bufferline.setup({
+  options = {
+    offsets = { { filetype = "NvimTree", text = "File Explorer", padding = 1 } },
+    buffer_close_icon = "",
+    modified_icon = "",
+    close_icon = "",
+    show_close_icon = true,
+    left_trunc_marker = "",
+    right_trunc_marker = "",
+    max_name_length = 14,
+    max_prefix_length = 13,
+    tab_size = 20,
+    show_tab_indicators = true,
+    enforce_regular_tabs = false,
+    view = "multiwindow",
+    show_buffer_close_icons = true,
+    separator_style = "thin",
+    always_show_bufferline = true,
+    diagnostics = "nvim_lsp", -- or "coc" if you're using coc
+  },
+})
+EOF
+
+" GalaxyLine configuration
+lua << EOF
+local gl = require('galaxyline')
+local gls = gl.section
+local diagnostic = require('galaxyline.provider_diagnostic')
+
+gl.short_line_list = {
+    'LuaTree', 'vista', 'dbui', 'term', 'nerdtree', 'fugitive',
+    'fugitiveblame', 'plug', 'dashboard'
+}
+
+local colors = {
+    line_bg  = '#1E1F29',
+    fg       = '#f8f8f2',
+    fg_green = '#3FBB5E',
+
+    yellow   = '#f1fa8c',
+    cyan     = '#8be9fd',
+    darkblue = '#83A598',
+    green    = '#50fa7b',
+    orange   = '#ffb86c',
+    purple   = '#bd93f9',
+    magenta  = '#ff79c6',
+    blue     = '#73BA9F',
+    red      = '#ff5555'
+}
+
+local function has_file_type()
+    local f_type = vim.bo.filetype
+    if not f_type or f_type == '' then return false end
+    return true
+end
+
+local buffer_not_empty = function()
+    if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then return true end
+    return false
+end
+
+local function insert_left(element) table.insert(gls.left, element) end
+
+local function insert_blank_line_at_left()
+    insert_left {
+        Space = {
+            provider = function() return ' ' end,
+            highlight = {colors.line_bg, colors.line_bg}
+        }
+    }
+end
+
+local function insert_right(element) table.insert(gls.right, element) end
+
+local function insert_blank_line_at_right()
+    insert_right {
+        Space = {
+            provider = function() return ' ' end,
+            highlight = {colors.line_bg, colors.line_bg}
+        }
+    }
+end
+
+insert_left {
+    Start = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+
+insert_blank_line_at_left()
+
+insert_left {
+    ViMode = {
+        icon = function()
+            local icons = {
+                n = ' ',
+                i = ' ',
+                c = ' ',
+                V = ' ',
+                [''] = ' ',
+                v = ' ',
+                C = 'ﲵ ',
+                R = '﯒ ',
+                t = ' '
+            }
+            return icons[vim.fn.mode()]
+        end,
+        provider = function()
+            -- auto change color according the vim mode
+            local alias = {
+                n = 'N',
+                i = 'I',
+                c = 'C',
+                V = 'VL',
+                [''] = 'V',
+                v = 'V',
+                C = 'C',
+                ['r?'] = ':CONFIRM',
+                rm = '--MORE',
+                R = 'R',
+                Rv = 'R&V',
+                s = 'S',
+                S = 'S',
+                ['r'] = 'HIT-ENTER',
+                [''] = 'SELECT',
+                t = 'T',
+                ['!'] = 'SH'
+            }
+
+            local mode_color = {
+                n = colors.yellow,
+                i = colors.green,
+                v = colors.blue,
+                [''] = colors.blue,
+                V = colors.blue,
+                c = colors.magenta,
+                no = colors.red,
+                s = colors.orange,
+                S = colors.orange,
+                [''] = colors.orange,
+                ic = colors.yellow,
+                R = colors.purple,
+                Rv = colors.purple,
+                cv = colors.red,
+                ce = colors.red,
+                r = colors.cyan,
+                rm = colors.cyan,
+                ['r?'] = colors.cyan,
+                ['!'] = colors.red,
+                t = colors.red
+            }
+
+            local vim_mode = vim.fn.mode()
+            vim.api.nvim_command('hi GalaxyViMode guifg=' ..
+                                     mode_color[vim_mode])
+            return alias[vim_mode]
+        end,
+        highlight = {colors.line_bg, colors.line_bg}
+    }
+}
+
+insert_blank_line_at_left()
+
+insert_left {
+    Separa = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+
+insert_left {
+    Start = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+
+insert_left {
+    FileIcon = {
+        provider = 'FileIcon',
+        condition = buffer_not_empty,
+        highlight = {
+            require('galaxyline.provider_fileinfo').get_file_icon_color,
+            colors.line_bg
+       }
+    }
+}
+
+insert_left {
+    BufferType = {
+        provider = 'FileTypeName',
+        condition = has_file_type,
+        highlight = {colors.fg, colors.line_bg}
+    }
+}
+
+insert_blank_line_at_left()
+
+insert_left {
+    GitIcon = {
+        provider = function() return '  ' end,
+        condition = require('galaxyline.provider_vcs').check_git_workspace,
+        highlight = {colors.orange, colors.line_bg}
+    }
+}
+
+insert_left {
+    GitBranch = {
+        provider = 'GitBranch',
+        condition = require('galaxyline.provider_vcs').check_git_workspace,
+        highlight = {'#8FBCBB', colors.line_bg}
+    }
+}
+
+insert_blank_line_at_left()
+
+local checkwidth = function()
+    local squeeze_width = vim.fn.winwidth(0) / 2
+    if squeeze_width > 40 then return true end
+    return false
+end
+
+insert_left {
+    DiffAdd = {
+        provider = 'DiffAdd',
+        condition = checkwidth,
+        icon = '  ',
+        highlight = {colors.green, colors.line_bg}
+    }
+}
+
+insert_left {
+    DiffModified = {
+        provider = 'DiffModified',
+        condition = checkwidth,
+        icon = '  ',
+        highlight = {colors.orange, colors.line_bg}
+    }
+}
+
+insert_left {
+    DiffRemove = {
+        provider = 'DiffRemove',
+        condition = checkwidth,
+        icon = '  ',
+        highlight = {colors.red, colors.line_bg}
+    }
+}
+
+DiagnosticError = diagnostic.get_diagnostic_error
+DiagnosticWarn = diagnostic.get_diagnostic_warn
+DiagnosticHint = diagnostic.get_diagnostic_hint
+DiagnosticInfo = diagnostic.get_diagnostic_info
+
+insert_left {
+    DiagnosticError = {
+        provider = 'DiagnosticError',
+        icon = '  ',
+        highlight = {colors.red, colors.line_bg}
+    }
+}
+
+insert_left {
+    DiagnosticWarn = {
+        provider = 'DiagnosticWarn',
+        condition = checkwidth,
+        icon = '  ',
+        highlight = {colors.yellow, colors.line_bg}
+    }
+}
+
+insert_left {
+    DiagnosticInfo = {
+        provider = DiagnosticInfo,
+        condition = checkwidth,
+        highlight = {colors.green, colors.line_bg},
+        icon = '  '
+    }
+}
+
+insert_left {
+    DiagnosticHint = {
+        provider = DiagnosticHint,
+        condition = checkwidth,
+        highlight = {colors.white, colors.line_bg},
+        icon = '  '
+    }
+}
+
+insert_left {
+    Separa = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+-- left information panel end}
+
+insert_right {
+    Start = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+
+insert_blank_line_at_right()
+
+insert_right {
+    FileFormat = {
+        provider = 'FileFormat',
+        condition = checkwidth,
+        highlight = {colors.fg, colors.line_bg, 'bold'}
+    }
+}
+
+insert_blank_line_at_right()
+
+insert_right {
+    LineInfo = {
+        provider = 'LineColumn',
+        separator = ' ',
+        condition = checkwidth,
+        separator_highlight = {colors.green, colors.line_bg},
+        highlight = {colors.fg, colors.line_bg}
+    }
+}
+
+insert_right {
+    PerCent = {
+        provider = 'LinePercent',
+        separator = '',
+        separator_highlight = {colors.blue, colors.line_bg},
+        highlight = {colors.cyan, colors.line_bg, 'bold'}
+    }
+}
+
+insert_right {
+    Encode = {
+        provider = 'FileEncode',
+        separator = '',
+        condition = checkwidth,
+        separator_highlight = {colors.blue, colors.line_bg},
+        highlight = {colors.cyan, colors.line_bg, 'bold'}
+    }
+}
+
+insert_blank_line_at_right()
+
+insert_right {
+    Separa = {
+        provider = function() return ' ' end,
+        highlight = {colors.line_bg}
+    }
+}
+
+-- Disable Status Line when opening nvimtree
+vim.api.nvim_exec (
+  [[au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == 'NvimTree'|set laststatus=0|else|set laststatus=2|endif]],
+  false
+) 
+EOF
