@@ -1,4 +1,4 @@
-"      ____      _ __        _         
+"       ____      _ __        _         
 "      /  _/___  (_) /__   __(_)___ ___ 
 "      / // __ \/ / __/ | / / / __ `__ \
 "    _/ // / / / / /__| |/ / / / / / / /
@@ -122,7 +122,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'tpope/vim-surround'
     Plug 'pangloss/vim-javascript'
     Plug 'altercation/vim-colors-solarized'
-    Plug 'yggdroot/indentline'
+"    Plug 'yggdroot/indentline'
+    Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'ap/vim-css-color'
     Plug 'scroloose/nerdtree'
     Plug 'prettier/vim-prettier'
@@ -273,18 +274,18 @@ augroup END
 
 set conceallevel=1
 
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_this                 = "@"
-let g:javascript_conceal_return               = "⇚"
-let g:javascript_conceal_undefined            = "¿"
-let g:javascript_conceal_NaN                  = "ℕ"
-let g:javascript_conceal_prototype            = "¶"
-let g:javascript_conceal_static               = "•"
-let g:javascript_conceal_super                = "Ω"
-let g:javascript_conceal_arrow_function       = "⇒"
-let g:javascript_conceal_noarg_arrow_function = "🞅"
-let g:javascript_conceal_underscore_arrow_function = "🞅"
+" let g:javascript_conceal_function             = "ƒ"
+" let g:javascript_conceal_null                 = "ø"
+" let g:javascript_conceal_this                 = "@"
+" let g:javascript_conceal_return               = "⇚"
+" let g:javascript_conceal_undefined            = "¿"
+" let g:javascript_conceal_NaN                  = "ℕ"
+" let g:javascript_conceal_prototype            = "¶"
+" let g:javascript_conceal_static               = "•"
+" let g:javascript_conceal_super                = "Ω"
+" let g:javascript_conceal_arrow_function       = "⇒"
+" let g:javascript_conceal_noarg_arrow_function = "🞅"
+" let g:javascript_conceal_underscore_arrow_function = "🞅"
 
 " NERDTree config
 autocmd StdinReadPre * let s:std_in=1
@@ -409,16 +410,16 @@ insert_left {
         provider = function()
             -- auto change color according the vim mode
             local alias = {
-                n = 'N',
-                i = 'I',
+                n = 'NORMAL',
+                i = 'INSERT',
                 c = 'C',
                 V = 'VL',
                 [''] = 'V',
-                v = 'V',
+                v = 'VISUAL',
                 C = 'C',
                 ['r?'] = ':CONFIRM',
                 rm = '--MORE',
-                R = 'R',
+                R = 'REPLACE',
                 Rv = 'R&V',
                 s = 'S',
                 S = 'S',
@@ -658,4 +659,53 @@ vim.api.nvim_exec (
   [[au BufEnter,BufWinEnter,WinEnter,CmdwinEnter * if bufname('%') == 'NvimTree'|set laststatus=0|else|set laststatus=2|endif]],
   false
 ) 
+EOF
+
+" IndentLine Configuration
+lua << EOF
+vim.opt.termguicolors = true
+vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    char_highlight_list = {
+        "IndentBlanklineIndent1",
+        "IndentBlanklineIndent2",
+        "IndentBlanklineIndent3",
+        "IndentBlanklineIndent4",
+        "IndentBlanklineIndent5",
+        "IndentBlanklineIndent6",
+    },
+}
+
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+}
+
+
 EOF
